@@ -1,0 +1,28 @@
+version: "3.0"
+
+services:
+  notes:
+    build:
+      context: .
+    container_name: notes
+    ports:
+      - 4050:4050
+    depends_on:
+      - postgres
+    restart: always
+
+  postgres:
+    container_name: pg_db
+    image: postgres
+    environment:
+      POSTGRES_DB: notes
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
+    restart: always
+
+volumes:
+  pgdata:
